@@ -17,36 +17,6 @@
 
 namespace dd {
 
-struct get_handle_t {
- private:
-  std::coroutine_handle<void> handle_;
-
-  // auto x = this_coro::handle must be a compile error,
-  // because need co_await
-  get_handle_t(const get_handle_t&) = default;
-
- public:
-  get_handle_t() = default;
-  bool await_ready() const noexcept {
-    return false;
-  }
-  bool await_suspend(std::coroutine_handle<void> handle) noexcept {
-    handle_ = handle;
-    return false;
-  }
-  std::coroutine_handle<void> await_resume() const noexcept {
-    return handle_;
-  }
-
-  get_handle_t operator co_await() const noexcept {
-    return *this;
-  }
-};
-
-DD_MODULE_EXPORT namespace this_coro {
-  constexpr inline get_handle_t handle = {};
-}
-
 struct input_and_output_iterator_tag : std::input_iterator_tag, std::output_iterator_tag {};
 
 template <typename Yield, typename Alloc>
