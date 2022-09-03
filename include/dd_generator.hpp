@@ -12,6 +12,9 @@
 #include <memory>
 #include <utility>
 #endif
+// compilers do to support now
+#define consteval constexpr
+
 namespace dd {
 
 struct get_handle_t {
@@ -43,8 +46,6 @@ struct get_handle_t {
 DD_MODULE_EXPORT namespace this_coro {
   constexpr inline get_handle_t handle = {};
 }
-
-// TODO скинуть о проблеме в спп дискуссионс на почте, реально срочная ведь фигня
 
 struct input_and_output_iterator_tag : std::input_iterator_tag, std::output_iterator_tag {};
 
